@@ -1,0 +1,60 @@
+/* ==========================================================================
+   global.css — Pokopia.blog
+   Tailwind CSS v4 : configuration via @theme, pas de tailwind.config.mjs
+   ========================================================================== */
+
+/* Import Tailwind CSS v4 (remplace @tailwind base/components/utilities) */
+@import "tailwindcss";
+
+/* Plugin typographie pour le rendu prose des articles MDX */
+@plugin "@tailwindcss/typography";
+
+/* ==========================================================================
+   Thème personnalisé — tokens du style guide
+   ========================================================================== */
+@theme {
+  /* Polices */
+  --font-family-display: "Quicksand", sans-serif;
+  --font-family-sans:    "Nunito", sans-serif;
+
+  /* Couleurs personnalisées */
+  --color-sky-pastel:  #7EC8E3;
+  --color-amber-soft:  #F6E27F;
+}
+
+/* ==========================================================================
+   Styles de base
+   ========================================================================== */
+body {
+  @apply bg-slate-50 text-slate-800;
+  font-family: var(--font-family-sans);
+}
+
+/* Classe utilitaire pour la police display (Quicksand) */
+.font-display {
+  font-family: var(--font-family-display);
+}
+
+/* ==========================================================================
+   Personnalisation du rendu prose (@tailwindcss/typography)
+   Utilise Nunito, couleur slate-800, liens sky-500
+   ========================================================================== */
+.prose {
+  font-family: var(--font-family-sans);
+  --tw-prose-body:        #1e293b; /* slate-800 */
+  --tw-prose-headings:    #1e293b;
+  --tw-prose-lead:        #475569; /* slate-600 */
+  --tw-prose-links:       #0ea5e9; /* sky-500  */
+  --tw-prose-bold:        #1e293b;
+  --tw-prose-counters:    #64748b; /* slate-500 */
+  --tw-prose-bullets:     #94a3b8; /* slate-400 */
+  --tw-prose-hr:          #e2e8f0; /* slate-200 */
+  --tw-prose-quotes:      #334155; /* slate-700 */
+  --tw-prose-quote-borders:#7EC8E3; /* sky-pastel */
+  --tw-prose-captions:    #64748b;
+  --tw-prose-code:        #334155;
+  --tw-prose-pre-code:    #e2e8f0;
+  --tw-prose-pre-bg:      #1e293b;
+  --tw-prose-th-borders:  #cbd5e1;
+  --tw-prose-td-borders:  #e2e8f0;
+}

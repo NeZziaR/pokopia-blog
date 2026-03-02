@@ -1,0 +1,85 @@
+---
+// src/layouts/BaseLayout.astro
+// Shell HTML commun à toutes les pages : head, header, footer
+import '../styles/global.css';
+
+interface Props {
+  /** Titre de la page (affiché dans <title> et les métas) */
+  title: string;
+  /** Description pour la balise <meta name="description"> */
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Titre dynamique -->
+    <title>{title} — Pokopia.blog</title>
+    <meta name="description" content={description} />
+
+    <!-- Favicon étoile SVG -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Google Fonts : Quicksand (display) + Nunito (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600;700&family=Nunito:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="min-h-screen flex flex-col">
+
+    <!-- ================================================================
+         Header sticky avec glassmorphism léger
+         ================================================================ -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b border-slate-100">
+      <nav class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+
+        <!-- Logo texte en Quicksand -->
+        <a
+          href="/"
+          class="font-display text-xl font-bold text-sky-400 no-underline hover:text-sky-500 transition-colors"
+        >
+          Pokopia.blog
+        </a>
+
+        <!-- Lien navigation -->
+        <a
+          href="/"
+          class="text-slate-600 hover:text-sky-400 font-semibold text-sm transition-colors"
+        >
+          Guides
+        </a>
+
+      </nav>
+    </header>
+
+    <!-- ================================================================
+         Contenu principal — max-w-4xl centré avec padding
+         ================================================================ -->
+    <main class="flex-1 max-w-4xl mx-auto w-full px-6 py-10">
+      <slot />
+    </main>
+
+    <!-- ================================================================
+         Footer — mention légale affilié Amazon obligatoire
+         ================================================================ -->
+    <footer class="bg-white border-t border-slate-100 mt-auto">
+      <div class="max-w-4xl mx-auto px-6 py-8 text-center space-y-2">
+        <p class="text-slate-500 text-sm font-semibold">© 2025 Pokopia.blog</p>
+        <p class="text-slate-400 text-xs max-w-lg mx-auto leading-relaxed">
+          En tant que Partenaire Amazon, je réalise un bénéfice sur les achats remplissant les conditions requises.
+        </p>
+      </div>
+    </footer>
+
+  </body>
+</html>

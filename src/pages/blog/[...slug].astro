@@ -1,0 +1,78 @@
+---
+// src/pages/blog/[...slug].astro
+// Template dynamique pour chaque article du blog
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Génération des chemins statiques depuis la collection blog
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props:  { post },
+  }));
+}
+
+const { post } = Astro.props;
+
+// Rendu du contenu MDX (API Astro 5)
+const { Content } = await render(post);
+
+// Formatage de la date en français
+const formatDate = (date: Date) =>
+  date.toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<BaseLayout title={post.data.title} description={post.data.description}>
+
+  <article class="prose prose-slate prose-base md:prose-lg max-w-none">
+
+    <!-- ================================================================
+         En-tête de l'article (hors prose pour un style custom)
+         ================================================================ -->
+    <header class="not-prose mb-10">
+
+      <!-- Tags -->
+      {post.data.tags && post.data.tags.length > 0 && (
+        <div class="flex flex-wrap gap-2 mb-4">
+          {post.data.tags.map(tag => (
+            <span class="bg-sky-100 text-sky-600 rounded-full px-3 py-1 text-xs font-semibold">
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
+
+      <!-- Titre H1 -->
+      <h1 class="font-display text-3xl md:text-4xl font-bold text-slate-800 leading-tight mb-3">
+        {post.data.title}
+      </h1>
+
+      <!-- Date de publication -->
+      <time
+        datetime={post.data.pubDate.toISOString()}
+        class="text-slate-400 text-sm"
+      >
+        Publié le {formatDate(post.data.pubDate)}
+      </time>
+
+      <!-- Image héro (optionnelle) — full-width sur mobile -->
+      {post.data.heroImage && (
+        <img
+          src={post.data.heroImage}
+          alt={post.data.title}
+          class="w-full rounded-2xl mt-6 shadow-sm object-cover aspect-video"
+          loading="eager"
+        />
+      )}
+
+    </header>
+
+    <!-- ================================================================
+         Corps de l'article — rendu MDX
+         ================================================================ -->
+    <Content />
+
+  </article>
+
+</BaseLayout>
