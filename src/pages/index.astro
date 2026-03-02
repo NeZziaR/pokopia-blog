@@ -1,16 +1,14 @@
 ---
 // src/pages/index.astro
-// Page d'accueil : hero + grille de tous les articles publiés
+// Homepage — hero cozy Pokemon×AC + grille d'articles
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// Récupération de tous les articles non-draft, triés par date décroissante
 const allPosts = await getCollection('blog', ({ data }) => !data.draft);
 const posts = allPosts.sort(
   (a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
 );
 
-// Formatage de la date en français
 const formatDate = (date: Date) =>
   date.toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' });
 ---
@@ -20,69 +18,143 @@ const formatDate = (date: Date) =>
   description="Tous les guides et astuces pour progresser dans Pokopia. Conseils débutants, stratégies avancées et secrets du jeu."
 >
 
-  <!-- ================================================================
-       Section héro
-       ================================================================ -->
-  <section class="text-center py-14 mb-4">
-    <h1 class="font-display text-4xl md:text-5xl font-bold text-slate-800 mb-4 leading-tight">
-      Bienvenue sur Pokopia.blog 🌿
-    </h1>
-    <p class="text-slate-500 text-lg max-w-xl mx-auto leading-relaxed">
-      Guides, astuces et secrets pour progresser dans Pokopia.
-      Écrits avec passion par un vrai joueur.
-    </p>
+  <!--
+    Hero pleine largeur — rendu via slot "hero" dans BaseLayout,
+    donc hors du <main> max-w-6xl. Touche les bords du navigateur.
+    rounded-b-3xl : arrondi doux uniquement en bas.
+    h-[500px] / 60vh pour l'effet cinématique.
+  -->
+  <section
+    slot="hero"
+    class="relative w-full overflow-hidden rounded-b-3xl h-[550px] min-h-[60vh]"
+  >
+
+    <!-- Image de fond — object-center pour toujours centrer le sujet -->
+    <img
+      src="/hero-pokopia.jpg"
+      alt="Pokopia — univers du jeu"
+      class="absolute inset-0 w-full h-full object-cover object-center"
+      loading="eager"
+    />
+
+    <!-- Overlay 1 : gradient vertical bas → lisibilité du texte -->
+    <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-transparent"></div>
+
+    <!-- Overlay 2 : vignette gauche → renforce le contraste sous le texte -->
+    <div class="absolute inset-0 bg-gradient-to-r from-black/50 via-black/10 to-transparent"></div>
+
+    <!-- Étoile décorative — haut droite -->
+    <svg class="absolute top-6 right-10 text-amber-300 opacity-75 drop-shadow" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
+    </svg>
+
+    <!-- Petite étoile — haut gauche -->
+    <svg class="absolute top-8 left-10 text-white opacity-25" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
+    </svg>
+
+    <!-- Texte ancré en bas, aligné sur max-w-6xl -->
+    <div class="absolute bottom-0 left-0 right-0 pb-10 md:pb-14">
+      <div class="max-w-6xl mx-auto px-6">
+
+        <!-- Badge panneau style Pokemon / AC -->
+        <span class="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-sm border border-white/30 text-white/90 text-xs font-bold uppercase tracking-widest rounded-full px-4 py-1.5 mb-5 block w-fit">
+          🌿 Guides Pokopia
+        </span>
+
+        <h1 class="font-display text-3xl md:text-5xl font-bold text-white leading-tight mb-3 drop-shadow-lg">
+          Bienvenue sur Pokopia.blog
+        </h1>
+        <p class="text-white/80 text-base md:text-lg leading-relaxed max-w-lg drop-shadow mb-6">
+          Guides, astuces et secrets pour progresser dans Pokopia.<br class="hidden md:block" />
+          Écrits avec passion par un vrai joueur.
+        </p>
+
+        <!-- CTA — bouton jaune vif style objet rare Pokemon -->
+        <a
+          href="#guides"
+          class="inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-300 text-black font-bold px-8 py-4 rounded-full shadow-lg hover:scale-110 transition-all duration-300 no-underline"
+        >
+          Explorer les guides
+          <!-- Flèche -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+
+      </div>
+    </div>
+
   </section>
 
   <!-- ================================================================
        Grille d'articles
        ================================================================ -->
-  <section>
-    <h2 class="font-display text-2xl font-bold text-slate-700 mb-6">
+  <section id="guides">
+
+    <!-- Titre de section avec feuille décorative -->
+    <h2 class="font-display text-2xl font-bold text-stone-700 mb-6 flex items-center gap-2">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="text-green-400" aria-hidden="true">
+        <path d="M17 8C8 10 5.9 16.17 3.82 19.85a1 1 0 1 0 1.75.98C7.01 17.56 8.74 13 17 12"/>
+        <path d="M3 3a19.74 19.74 0 0 1 14 7A19.93 19.93 0 0 1 20 21c-3.5-2-6-5-6-10A10 10 0 0 0 3 3"/>
+      </svg>
       Derniers guides
     </h2>
 
     {posts.length === 0 ? (
-      <p class="text-slate-400 text-center py-16">
+      <p class="text-stone-400 text-center py-16">
         Aucun article pour l'instant — revenez bientôt !
       </p>
     ) : (
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         {posts.map(post => (
-          <article class="bg-white rounded-3xl shadow-sm p-6 hover:shadow-md transition-shadow flex flex-col gap-4">
+          <article class="bg-white border border-amber-100 rounded-3xl shadow-sm p-6 hover:border-green-200 hover:shadow-md transition-all flex flex-col gap-4">
 
-            <!-- Tags -->
+            <!-- Barre d'accent style jauge Pokemon (HP bar) -->
+            <div class="flex items-center gap-1" aria-hidden="true">
+              <div class="h-1.5 w-8 rounded-full bg-green-400"></div>
+              <div class="h-1.5 w-4 rounded-full bg-green-200"></div>
+              <div class="h-1.5 w-2 rounded-full bg-green-100"></div>
+            </div>
+
+            <!-- Tags style badge Type Pokemon -->
             {post.data.tags && post.data.tags.length > 0 && (
               <div class="flex flex-wrap gap-2">
                 {post.data.tags.map(tag => (
-                  <span class="bg-sky-100 text-sky-600 rounded-full px-3 py-1 text-xs font-semibold">
-                    {tag}
+                  <span class="inline-flex items-center gap-1 border-2 border-green-300 bg-green-50 text-green-700 rounded-full px-3 py-0.5 text-xs font-bold uppercase tracking-wide">
+                    ✦ {tag}
                   </span>
                 ))}
               </div>
             )}
 
-            <!-- Titre lié à l'article -->
-            <h3 class="font-display text-lg font-bold text-slate-800 leading-snug">
+            <!-- Titre -->
+            <h3 class="font-display text-lg font-bold text-stone-800 leading-snug">
               <a
                 href={`/blog/${post.slug}`}
-                class="hover:text-sky-500 transition-colors no-underline"
+                class="hover:text-green-600 transition-colors no-underline"
               >
                 {post.data.title}
               </a>
             </h3>
 
-            <!-- Description tronquée -->
-            <p class="text-slate-500 text-sm line-clamp-3 flex-1 leading-relaxed">
+            <!-- Description -->
+            <p class="text-stone-500 text-sm line-clamp-3 flex-1 leading-relaxed">
               {post.data.description}
             </p>
 
-            <!-- Date de publication -->
-            <time
-              datetime={post.data.pubDate.toISOString()}
-              class="text-slate-400 text-xs"
-            >
-              {formatDate(post.data.pubDate)}
-            </time>
+            <!-- Date + lien "Lire" -->
+            <div class="flex items-center justify-between pt-1">
+              <time datetime={post.data.pubDate.toISOString()} class="text-stone-400 text-xs">
+                {formatDate(post.data.pubDate)}
+              </time>
+              <a
+                href={`/blog/${post.slug}`}
+                class="text-xs font-bold text-green-600 hover:text-green-700 transition-colors no-underline flex items-center gap-1"
+              >
+                Lire →
+              </a>
+            </div>
 
           </article>
         ))}

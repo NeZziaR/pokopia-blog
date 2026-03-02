@@ -1,60 +1,78 @@
 /* ==========================================================================
    global.css — Pokopia.blog
-   Tailwind CSS v4 : configuration via @theme, pas de tailwind.config.mjs
+   Palette : Pokemon × Animal Crossing — cozy, chaud, nature
    ========================================================================== */
 
-/* Import Tailwind CSS v4 (remplace @tailwind base/components/utilities) */
 @import "tailwindcss";
-
-/* Plugin typographie pour le rendu prose des articles MDX */
 @plugin "@tailwindcss/typography";
 
 /* ==========================================================================
-   Thème personnalisé — tokens du style guide
+   Thème — polices Quicksand + Nunito
    ========================================================================== */
 @theme {
-  /* Polices */
   --font-family-display: "Quicksand", sans-serif;
   --font-family-sans:    "Nunito", sans-serif;
-
-  /* Couleurs personnalisées */
-  --color-sky-pastel:  #7EC8E3;
-  --color-amber-soft:  #F6E27F;
 }
 
 /* ==========================================================================
-   Styles de base
+   Base — fond crème chaud, texte stone (plus chaud que slate)
    ========================================================================== */
 body {
-  @apply bg-slate-50 text-slate-800;
+  @apply bg-amber-50 text-stone-800;
   font-family: var(--font-family-sans);
 }
 
-/* Classe utilitaire pour la police display (Quicksand) */
 .font-display {
   font-family: var(--font-family-display);
 }
 
 /* ==========================================================================
-   Personnalisation du rendu prose (@tailwindcss/typography)
-   Utilise Nunito, couleur slate-800, liens sky-500
+   Pattern points — texture herbe style Animal Crossing
+   Utilisé dans le hero de la homepage
+   ========================================================================== */
+.pattern-dots {
+  background-image: radial-gradient(circle, #bbf7d0 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* ==========================================================================
+   Prose — rendu articles MDX
+   Couleurs chaudes stone, liens sky, citations avec bordure verte
    ========================================================================== */
 .prose {
   font-family: var(--font-family-sans);
-  --tw-prose-body:        #1e293b; /* slate-800 */
-  --tw-prose-headings:    #1e293b;
-  --tw-prose-lead:        #475569; /* slate-600 */
-  --tw-prose-links:       #0ea5e9; /* sky-500  */
-  --tw-prose-bold:        #1e293b;
-  --tw-prose-counters:    #64748b; /* slate-500 */
-  --tw-prose-bullets:     #94a3b8; /* slate-400 */
-  --tw-prose-hr:          #e2e8f0; /* slate-200 */
-  --tw-prose-quotes:      #334155; /* slate-700 */
-  --tw-prose-quote-borders:#7EC8E3; /* sky-pastel */
-  --tw-prose-captions:    #64748b;
-  --tw-prose-code:        #334155;
-  --tw-prose-pre-code:    #e2e8f0;
-  --tw-prose-pre-bg:      #1e293b;
-  --tw-prose-th-borders:  #cbd5e1;
-  --tw-prose-td-borders:  #e2e8f0;
+  --tw-prose-body:         #292524; /* stone-800 */
+  --tw-prose-headings:     #1c1917; /* stone-900 */
+  --tw-prose-lead:         #57534e; /* stone-600 */
+  --tw-prose-links:        #0284c7; /* sky-600   */
+  --tw-prose-bold:         #292524;
+  --tw-prose-counters:     #78716c; /* stone-500 */
+  --tw-prose-bullets:      #a8a29e; /* stone-400 */
+  --tw-prose-hr:           #e7e5e4; /* stone-200 */
+  --tw-prose-quotes:       #44403c; /* stone-700 */
+  --tw-prose-quote-borders:#4ade80; /* green-400 */
+  --tw-prose-captions:     #78716c;
+  --tw-prose-code:         #44403c;
+  --tw-prose-pre-code:     #e7e5e4;
+  --tw-prose-pre-bg:       #1c1917;
+  --tw-prose-th-borders:   #d6d3d1; /* stone-300 */
+  --tw-prose-td-borders:   #e7e5e4;
+}
+
+/* Titres en Quicksand dans les articles */
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  font-family: var(--font-family-display);
+}
+
+/* Blockquote style "carnet de terrain" */
+.prose blockquote {
+  @apply bg-green-50 rounded-2xl border-l-4 border-green-400 px-5 py-1 not-italic;
+}
+
+/* Images arrondies dans les articles */
+.prose img {
+  @apply rounded-2xl shadow-sm;
 }
