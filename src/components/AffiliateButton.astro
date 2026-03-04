@@ -1,39 +1,22 @@
 ---
 // src/components/AffiliateButton.astro
-// Bouton affilié Amazon — style "objet rare" Pokemon avec icône baie
+// Bouton lien affilié Amazon — style officiel orange Amazon
 
 interface Props {
-  href: string;
+  /** URL Amazon (avec tag affilié) */
+  url: string;
+  /** Texte affiché dans le bouton */
   label?: string;
 }
 
-const { href, label = "Voir sur Amazon" } = Astro.props;
+const { url, label = "Voir sur Amazon" } = Astro.props;
 ---
 
 <a
-  href={href}
+  href={url}
   target="_blank"
   rel="nofollow noopener sponsored"
-  class="inline-flex items-center gap-2.5 bg-amber-200 hover:bg-amber-300 text-stone-800 font-bold rounded-2xl px-6 py-3 shadow-sm border-2 border-amber-300 hover:border-amber-400 transition-all no-underline"
+  class="inline-flex items-center gap-2 bg-[#FF9900] hover:bg-[#e68900] text-black font-bold rounded-full px-6 py-3 shadow-md hover:scale-105 transition-transform duration-200 no-underline"
 >
-  <!-- Icône baie Pokemon (Baie Oran — 3 baies regroupées) -->
-  <svg
-    width="20" height="20" viewBox="0 0 20 20"
-    aria-hidden="true" focusable="false"
-  >
-    <!-- Baie gauche -->
-    <circle cx="6.5" cy="13" r="3.5" fill="#4ade80"/>
-    <!-- Baie droite -->
-    <circle cx="13.5" cy="13" r="3.5" fill="#4ade80"/>
-    <!-- Baie du haut (plus claire = lumière) -->
-    <circle cx="10" cy="9"  r="3.5" fill="#86efac"/>
-    <!-- Reflet brillant -->
-    <circle cx="8.5" cy="7.5" r="1.1" fill="white" opacity="0.6"/>
-    <!-- Tige -->
-    <path d="M10 5.5 Q10.5 3 13 2.5" stroke="#16a34a" stroke-width="1.4" fill="none" stroke-linecap="round"/>
-    <!-- Petite feuille -->
-    <ellipse cx="13.2" cy="2.4" rx="2" ry="1.1" fill="#4ade80" transform="rotate(-25 13.2 2.4)"/>
-  </svg>
-
-  {label}
+  🛒 {label}
 </a>

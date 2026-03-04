@@ -12,8 +12,12 @@ const blog = defineCollection({
     description: z.string(),
     /** Date de publication (format ISO : YYYY-MM-DD) */
     pubDate: z.coerce.date(),
-    /** URL de l'image à la une (optionnel) */
+    /** URL de l'image à la une (optionnel) — utiliser heroImage ou image */
     heroImage: z.string().optional(),
+    /** Alias de heroImage pour compatibilité */
+    image: z.string().optional(),
+    /** Auteur de l'article (optionnel) */
+    author: z.string().optional(),
     /** Liste de tags pour le filtrage et l'affichage (optionnel) */
     tags: z.array(z.string()).optional(),
     /** Si true, l'article ne sera pas publié dans le build */
