@@ -25,6 +25,13 @@ const { title, description } = Astro.props;
       href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600;700&family=Nunito:wght@400;600&display=swap"
       rel="stylesheet"
     />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QKPYQJ2WMX"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QKPYQJ2WMX');
+    </script>
   </head>
 
   <body class="min-h-screen flex flex-col">
